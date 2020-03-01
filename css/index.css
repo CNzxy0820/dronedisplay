@@ -1,0 +1,634 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+i,
+em {
+    font-style: normal;
+}
+
+li {
+    list-style: none;
+}
+
+button {
+    outline: none;
+    border: 0;
+}
+
+/*阿里字体图标引入*/
+
+@font-face {
+    font-family: "iconfont";
+    src: url('../fonts/iconfont.eot?t=1581848892403');
+    /* IE9 */
+    src: url('../fonts/iconfont.eot?t=1581848892403#iefix') format('embedded-opentype'),
+        /* IE6-IE8 */
+        /* url('../fonts/data:application/x-font-woff2;charset=utf-8;base64,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') format('woff2'), */
+        url('../fonts/iconfont.woff?t=1581848892403') format('woff'),
+        url('../fonts/iconfont.ttf?t=1581848892403') format('truetype'),
+        /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+        url('../fonts/iconfont.svg?t=1581848892403#iconfont') format('svg');
+    /* iOS 4.1- */
+}
+
+
+/*阿里字体图标类*/
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* 地图容器 */
+#mapContain {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* 用户信息盒子*/
+.userInfoBox {
+    position: absolute;
+    top: 20px;
+    left: 80px;
+    z-index: 2;
+    padding-left: 10px;
+    border-radius: 10px;
+    width: 200px;
+    height: 30px;
+    background: rgba(0, 0, 0, .5);
+}
+
+/* 用户头像logo */
+.userInfoBox i {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    margin-top: -10px;
+    line-height: 20px;
+    border-radius: 0 4px 4px 0;
+    text-align: center;
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    background: rgba(0, 0, 0, .8);
+}
+
+.userInfoBox i:hover {
+    cursor: pointer;
+    background-color: #00a4ff;
+}
+
+/* 用户信息右展按钮 */
+.userInfoBox .list {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background-color: transparent;
+}
+
+/* 用户名盒子 */
+.userInfoBox #name {
+    position: absolute;
+    left: 80px;
+    line-height: 30px;
+    text-align: center;
+    color: #fff;
+}
+
+/* 详细信息栏 */
+.userInfoBox #deviceInfo {
+    display: none;
+    position: absolute;
+    z-index: 4;
+    top: -7.5px;
+    left: 200px;
+    width: 200px;
+    height: 30px;
+    border-radius: 5px;
+    color: #fff;
+    background: rgba(0, 0, 0, .5)
+}
+
+/* 按钮栏 */
+.functionButton {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    padding: 0 10px;
+    padding-top: 10px;
+    margin-top: -50px;
+    right: 20px;
+}
+
+/* 图标按钮 */
+.functionButton button {
+    display: block;
+    margin: 20px 0;
+    font-size: 28px;
+    outline: none;
+    border: 0;
+    cursor: pointer;
+    background-color: transparent;
+    color: #fff;
+    background: rgba(0, 0, 0, .3);
+}
+
+/* 热力图控制 */
+#heatMapControl {
+    position: absolute;
+    display: none;
+    right: 60px;
+    top: 50%;
+    margin-top: -40px;
+    z-index: 4;
+    width: 120px;
+    height: 370px;
+    background-color: rgba(0, 0, 0, .3);
+    font-size: 14px;
+    color: #fff;
+}
+
+#heatMapControl table {
+    margin-bottom: 30px;
+}
+
+/* 数据盒 */
+.dataBox {
+    position: absolute;
+    z-index: 2;
+    left: 20px;
+    top: 80px;
+    padding: 0 20px;
+    width: 340px;
+    height: 850px;
+    border-radius: 50px;
+    background: rgba(64, 64, 64, 1);
+    /* background-color: #404040; */
+}
+
+/* 飞行图标 */
+.dataBox>i:first-child {
+    position: absolute;
+    top: -20px;
+    left: 90px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 40px;
+    background-color: #fff;
+}
+
+/* 驾驶图标 */
+.dataBox>i:last-of-type {
+    position: absolute;
+    top: -20px;
+    left: 200px;
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    font-size: 40px;
+    background-color: #fff;
+}
+
+/* 无人机驾驶标题 */
+.dataBox .heading-line {
+    position: absolute;
+    left: 50%;
+    margin-left: -60px;
+    top: 50px;
+    font-size: 35px;
+    font-weight: 400;
+    color: #fff;
+}
+
+.dataBox .heading-line:before,
+.heading-line:after {
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 70%;
+}
+
+.dataBox .heading-line:before {
+    right: .5em;
+    margin-left: -85%;
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+.dataBox .heading-line:after {
+    background-image: linear-gradient(to right, rgba(255, 255, 255, 1), rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+    left: .5em;
+    margin-right: -85%;
+}
+
+/* 飞行 驾驶 字体 设置 */
+.dataBox .iconfont span {
+    display: table;
+    margin-top: 0;
+    margin-left: 3px;
+    color: #fff;
+    font-size: 16px;
+}
+
+/* 无人机数目 */
+.dataBox>span {
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    margin-left: -15%;
+    color: #fff;
+    font-size: 12px;
+}
+
+/* 飞机数据盒子 */
+.dataBox #airplane ul li {
+    display: none;
+    width: 300px;
+    height: 135px;
+}
+
+.dataBox #airplane ul li:first-child {
+    position: absolute;
+    top: 200px;
+}
+
+.dataBox #airplane ul li:nth-child(2) {
+    position: absolute;
+    top: 350px;
+
+}
+
+.dataBox #airplane ul li:nth-child(3) {
+    position: absolute;
+    top: 500px;
+}
+
+.dataBox #airplane ul li:nth-child(4) {
+    position: absolute;
+    top: 650px;
+}
+
+/* 飞机设备图标 */
+.dataBox #airplane ul li>i {
+    background-color: transparent;
+}
+
+.dataBox #airplane .airAttributes {
+    margin-left: 45px;
+}
+
+/* 飞机数据表格 */
+.dataBox #airplane .airAttributes td {
+    width: 150px;
+    height: 45px;
+}
+
+/* 空气数据右展开关 */
+.dataBox #airplane ul li>button {
+    position: absolute;
+    top: 50%;
+    margin-top: -10px;
+    right: -40px;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, .5);
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+}
+
+/* 空气数据盒 */
+.airData ul li {
+    width: 730px;
+    height: 100px;
+    border-radius: 5px 30px 30px 5px;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+/* 盒子位置 */
+.airData ul li {
+    display: none;
+}
+
+.airData ul li:first-of-type {
+    position: absolute;
+    z-index: 4;
+    left: 360px;
+    top: 295px;
+}
+
+
+.airData ul li:nth-of-type(2) {
+    position: absolute;
+    z-index: 4;
+    left: 360px;
+    top: 445px;
+
+}
+
+.airData ul li:nth-of-type(3) {
+    position: absolute;
+    z-index: 4;
+    left: 360px;
+    top: 595px;
+}
+
+.airData ul li:last-of-type {
+    position: absolute;
+    z-index: 4;
+    left: 360px;
+    top: 745px;
+}
+
+/* 收回按钮 */
+.airData ul li:first-of-type>button {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+
+.airData ul li:nth-of-type(2)>button {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+
+
+.airData ul li:nth-of-type(3)>button {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+.airData ul li:last-of-type>button {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    margin-top: -10px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    color: #fff;
+    background: rgba(0, 0, 0, .5);
+}
+
+/* 空气数据表格 */
+.airData ul li table td {
+    width: 80px;
+    height: 50px;
+}
+
+/* 驾驶界面 */
+#airplaneDrive>ul>li {
+    width: 300px;
+    height: 135px;
+}
+
+#airplaneDrive ul li .driveControl>li {
+    float: left;
+    font-size: 60px;
+}
+
+/* $号飞机驾驶区域 */
+#airplaneDrive>ul>li:first-child {
+    display: none;
+    position: absolute;
+    top: 200px;
+}
+
+#airplaneDrive>ul>li:nth-of-type(2) {
+    display: none;
+    position: absolute;
+    top: 350px;
+}
+
+#airplaneDrive>ul>li:nth-of-type(3) {
+    display: none;
+    position: absolute;
+    top: 500px;
+}
+
+#airplaneDrive>ul>li:nth-of-type(4) {
+    display: none;
+    position: absolute;
+    top: 650px;
+}
+
+/* 飞机控制按钮 */
+/* 向前 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(1) {
+    position: absolute;
+    top: 20px;
+    left: 65px;
+}
+
+/* 向左 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(2) {
+    position: absolute;
+    top: 70px;
+    left: 10px;
+}
+
+/* 向下 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(3) {
+    position: absolute;
+    top: 70px;
+    left: 65px;
+}
+
+/* 向右 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(4) {
+    position: absolute;
+    top: 70px;
+    left: 120px;
+}
+
+/* 上升 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(5) {
+    position: absolute;
+    top: 20px;
+    left: 230px;
+}
+
+/* 下降 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(6) {
+    position: absolute;
+    top: 70px;
+    left: 230px;
+}
+
+/* 左转 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(7) {
+    position: absolute;
+    top: 20px;
+    left: 10px;
+}
+
+/* 右转 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(8) {
+    position: absolute;
+    top: 20px;
+    left: 120px;
+}
+
+/* 起飞 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(9) {
+    position: absolute;
+    top: 20px;
+    left: 175px;
+}
+
+/* 返航 */
+#airplaneDrive ul li .driveControl>li:nth-of-type(10) {
+    position: absolute;
+    top: 70px;
+    left: 175px;
+}
+
+
+
+/* 飞机驾驶界面设备名称 */
+#planeControl1 {
+    color: red;
+}
+
+#planeControl2 {
+    color: yellow;
+}
+
+#planeControl3 {
+    color: pink;
+}
+
+#planeControl4 {
+    color: green;
+}
+
+/* 1号视频盒子 */
+#videoBox1 {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 65px;
+    top: 50px;
+    width: 595px;
+    height: 335px;
+}
+
+#videoBox1 #myVideo1 {
+    width: 100%;
+    height: 100%;
+}
+
+/* 2号视频盒子 */
+#videoBox2 {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 524px;
+    top: 50px;
+    width: 449px;
+    height: 250px;
+    background-color: #000;
+}
+
+#videoBox2 #myVideo2 {
+    width: 100%;
+    height: 100%;
+}
+
+/* 3号视频盒子 */
+#videoBox3 {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 287px;
+    top: 310px;
+    width: 444px;
+    height: 250px;
+    background-color: #000;
+}
+
+#videoBox3 #myVideo3 {
+    width: 100%;
+    height: 100%;
+}
+
+/* 4号视频盒子 */
+#videoBox4 {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    right: 287px;
+    top: 570px;
+    width: 444px;
+    height: 250px;
+    background-color: #000;
+}
+
+#videoBox4 #myVideo4 {
+    width: 100%;
+    height: 100%;
+}
+
+/* 刷新按钮 */
+.video-js .iconReload {
+    cursor: pointer;
+    -webkit-box-flex: none;
+    -moz-box-flex: none;
+    -webkit-flex: none;
+    -ms-flex: none;
+    flex: none;
+}
+
+.iconReload:before {
+    content: "\e675";
+    font-family: "iconfont";
+    font-size: 16px;
+}

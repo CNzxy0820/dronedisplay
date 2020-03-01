@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="shortcut icon" href="images/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link href="https://unpkg.com/video.js@5.20.0/dist/video-js.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="//apps.bdimg.com/libs/jqueryui/1.10.4/css/jquery-ui.min.css">
+    <!-- 地图js -->
+    <script src="https://webapi.amap.com/maps?v=1.4.15&key=6909f98337130d3700648b988d775d0d"></script>
+    <!-- 热力图js -->
+    <script src="https://webapi.amap.com/loca?v=1.3.2&key=6909f98337130d3700648b988d775d0d"></script>
+    <script src="https://a.amap.com/Loca/static/dist/jquery.min.js"></script>
+    <script src="javascript/video.js"></script>
+    <script src="javascript/jquery-3.4.1.min.js"></script>
+    <!-- 视频拖拽js -->
+    <script src="javascript/jquery-ui.min.js"></script>
+    <script>
+        $(function () {
+            $("#videoBox1").resizable();
+            $("#videoBox1").draggable();
+        });
+        $(function () {
+            $("#videoBox2").resizable();
+            $("#videoBox2").draggable();
+        });
+        $(function () {
+            $("#videoBox3").resizable();
+            $("#videoBox3").draggable();
+        });
+        $(function () {
+            $("#videoBox4").resizable();
+            $("#videoBox4").draggable();
+        });
+    </script>
+</head>
+
+<body>
+    <script src="javascript/bootstrap.min.js"></script>
+    <!-- 地图容器 -->
+    <div id="mapContain">
+        <!-- 用户信息表格 -->
+        <div class="userInfoBox">
+            <button class="iconfont list" id="list" onclick="userInfoList()">&#xe659;</button>
+            <i class="iconfont">&#xe60d;</i>
+            <span id="name"></span>
+            <table id="deviceInfo">
+                <tr>
+                    <td class="iconfont">&#xe6a9; :</td>
+                    <td id="telePhone"></td>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="iconfont">&#xe631; :</td>
+                    <td id="email"></td>
+                </tr>
+            </table>
+        </div>
+        <!-- 按钮侧栏 -->
+        <div class="functionButton">
+            <!-- 地图跟随 -->
+            <button class="iconfont" onclick="followMap()">&#xe755;</button>
+            <!-- 图层切换 -->
+            <button class="iconfont" onclick="switchLayer()">&#xe636;</button>
+            <!-- 数据清除 -->
+            <button class="iconfont" onclick="controlPolyline()">&#xe609;</button>
+            <!-- 热力图 -->
+            <button class="iconfont" onclick="heatMaps()" id="heatMap">&#xe616;</button>
+            <!-- 地图放大 -->
+            <button class="iconfont" onclick="moreBig()">&#xe605;</button>
+            <!-- 地图缩小 -->
+            <button class="iconfont" onclick="moreSmall()">&#xe61d;</button>
+
+        </div>
+        <!-- 热力图控制 -->
+        <div id="heatMapControl">
+            <!-- airplane1 -->
+            <div id='heatMapBox'>
+                <table>
+                    <tr>
+                        <td>SO₂<input type="checkbox" name="SO21" id="SO21"></td>
+                        <td>O₃<input type="checkbox" name="O31" id="O31"></td>
+                    </tr>
+                    <tr>
+                        <td>NO₂<input type="checkbox" name="NO21" id="NO21"></td>
+                        <td>CO<input type="checkbox" name="CO1" id="CO1"></td>
+                    </tr>
+                    <tr>
+                        <td>PM2.5<input type="checkbox" name="PM251" id="PM251"></td>
+                        <td>PM10<input type="checkbox" name="PM101" id="PM101"></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- airplane2 -->
+            <div id='heatMapBox'>
+                <table>
+                    <tr>
+                        <td>SO₂<input type="checkbox" name="SO22" id="SO22"></td>
+                        <td>O₃<input type="checkbox" name="O32" id="O32"></td>
+                    </tr>
+                    <tr>
+                        <td>NO₂<input type="checkbox" name="NO22" id="NO22"></td>
+                        <td>CO<input type="checkbox" name="CO2" id="CO2"></td>
+                    </tr>
+                    <tr>
+                        <td>PM2.5<input type="checkbox" name="PM252" id="PM252"></td>
+                        <td>PM10<input type="checkbox" name="PM102" id="PM102"></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- airplane3 -->
+            <div id='heatMapBox'>
+                <table>
+                    <tr>
+                        <td>SO₂<input type="checkbox" name="SO23" id="SO23"></td>
+                        <td>O₃<input type="checkbox" name="O33" id="O33"></td>
+                    </tr>
+                    <tr>
+                        <td>NO₂<input type="checkbox" name="NO23" id="NO23"></td>
+                        <td>CO<input type="checkbox" name="CO3" id="CO3"></td>
+                    </tr>
+                    <tr>
+                        <td>PM2.5<input type="checkbox" name="PM253" id="PM253"></td>
+                        <td>PM10<input type="checkbox" name="PM103" id="PM103"></td>
+                    </tr>
+                </table>
+            </div>
+            <!-- airplane4 -->
+            <div id='heatMapBox'>
+                <table>
+                    <tr>
+                        <td>SO₂<input type="checkbox" name="SO24" id="SO24"></td>
+                        <td>O₃<input type="checkbox" name="O34" id="O34"></td>
+                    </tr>
+                    <tr>
+                        <td>NO₂<input type="checkbox" name="NO24" id="NO24"></td>
+                        <td>CO<input type="checkbox" name="CO4" id="CO4"></td>
+                    </tr>
+                    <tr>
+                        <td>PM2.5<input type="checkbox" name="PM254" id="PM254"></td>
+                        <td>PM10<input type="checkbox" name="PM104" id="PM104"></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <!-- 飞机数据盒 -->
+        <div class="dataBox">
+            <i class="iconfont" id="flyData" onclick="flyData()">&#xe888;<span>飞行</span></i>
+            <i class="iconfont" id="flyDrive" onclick="flyDrive()">&#xe559;<span>驾驶</span></i>
+            <h5 class="heading-line">无人机驾驶</h5>
+            <span>无人机数目: <span id="numOfAir">0</span>/4</span>
+            <div id="airplaneDrive">
+                <ul>
+                    <li id="airdrive1">
+                        <span id="planeControl1" class="iconfont"> </span>
+                        <ul class="driveControl">
+                            <li class="iconfont" onclick="moveTop1()">&#xe68b;</li>
+                            <li class="iconfont" onclick="moveLeft1()">&#xe68c;</li>
+                            <li class="iconfont" onclick="moveBottom1()">&#xe68d;</li>
+                            <li class="iconfont" onclick="moveRight1()">&#xe68e;</li>
+                            <li class="iconfont" onclick="turnUp1()">&#xe603;</li>
+                            <li class="iconfont" onclick="turnDown1()">&#xe604;</li>
+                            <li class="iconfont" onclick="turnLeft1()">&#xe722;</li>
+                            <li class="iconfont" onclick="turnRight1()">&#xe720;</li>
+                            <li class="iconfont" onclick="takeOff1()">&#xe6b1;</li>
+                            <li class="iconfont" onclick="goHome1()">&#xe687;</li>
+                        </ul>
+                    </li>
+                    <li id="airdrive2">
+                        <span id="planeControl2" class="iconfont"> </span>
+                        <ul class="driveControl">
+                            <li class="iconfont" onclick="moveTop2()">&#xe68b;</li>
+                            <li class="iconfont" onclick="moveLeft2()">&#xe68c;</li>
+                            <li class="iconfont" onclick="moveBottom2()">&#xe68d;</li>
+                            <li class="iconfont" onclick="moveRight2()">&#xe68e;</li>
+                            <li class="iconfont" onclick="turnUp2()">&#xe603;</li>
+                            <li class="iconfont" onclick="turnDown2()">&#xe604;</li>
+                            <li class="iconfont" onclick="turnLeft2()">&#xe722;</li>
+                            <li class="iconfont" onclick="turnRight2()">&#xe720;</li>
+                            <li class="iconfont" onclick="takeOff2()">&#xe6b1;</li>
+                            <li class="iconfont" onclick="goHome2()">&#xe687;</li>
+                        </ul>
+                    </li>
+                    <li id="airdrive3">
+                        <span id="planeControl3" class="iconfont"> </span>
+                        <ul class="driveControl">
+                            <li class="iconfont" onclick="moveTop3()">&#xe68b;</li>
+                            <li class="iconfont" onclick="moveLeft3()">&#xe68c;</li>
+                            <li class="iconfont" onclick="moveBottom3()">&#xe68d;</li>
+                            <li class="iconfont" onclick="moveRight3()">&#xe68e;</li>
+                            <li class="iconfont" onclick="turnUp3()">&#xe603;</li>
+                            <li class="iconfont" onclick="turnDown3()">&#xe604;</li>
+                            <li class="iconfont" onclick="turnLeft3()">&#xe722;</li>
+                            <li class="iconfont" onclick="turnRight3()">&#xe720;</li>
+                            <li class="iconfont" onclick="takeOff3()">&#xe6b1;</li>
+                            <li class="iconfont" onclick="goHome3()">&#xe687;</li>
+                        </ul>
+                    </li>
+                    <li id="airdrive4">
+                        <span id="planeControl4" class="iconfont"> </span>
+                        <ul class="driveControl">
+                            <li class="iconfont" onclick="moveTop4()">&#xe68b;</li>
+                            <li class="iconfont" onclick="moveLeft4()">&#xe68c;</li>
+                            <li class="iconfont" onclick="moveBottom4()">&#xe68d;</li>
+                            <li class="iconfont" onclick="moveRight4()">&#xe68e;</li>
+                            <li class="iconfont" onclick="turnUp4()">&#xe603;</li>
+                            <li class="iconfont" onclick="turnDown4()">&#xe604;</li>
+                            <li class="iconfont" onclick="turnLeft4()">&#xe722;</li>
+                            <li class="iconfont" onclick="turnRight4()">&#xe720;</li>
+                            <li class="iconfont" onclick="takeOff4()">&#xe6b1;</li>
+                            <li class="iconfont" onclick="goHome4()">&#xe687;</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div id="airplane">
+                <ul>
+                    <li id="airplane1">
+                        <button class="iconfont" id="airDataBox1" onclick="airDataBox1()">&#xe659;</button>
+                        <span id="plane1"><i class="iconfont">&#xe629;</i><span id="username1"></span></span>
+                        <table class="airAttributes">
+                            <tr>
+                                <td id="lng1"></td>
+                                <td id="lat1"></td>
+                                <td id="height1"></td>
+                            </tr>
+                            <tr>
+                                <td>经度</td>
+                                <td>纬度</td>
+                                <td>高度</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li id="airplane2">
+                        <button class="iconfont" id="airDataBox2" onclick="airDataBox2()">&#xe659;</button>
+                        <span id="plane2"><i class="iconfont">&#xe629;</i><span id="username2"></span></span>
+                        <table class="airAttributes">
+                            <tr>
+                                <td id="lng2"></td>
+                                <td id="lat2"></td>
+                                <td id="height2"></td>
+                            </tr>
+                            <tr>
+                                <td>经度</td>
+                                <td>纬度</td>
+                                <td>高度</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li id="airplane3">
+                        <button class="iconfont" id="airDataBox3" onclick="airDataBox3()">&#xe659;</button>
+                        <span id="plane3"><i class="iconfont">&#xe629;</i><span id="username3"></span></span>
+                        <table class="airAttributes">
+                            <tr>
+                                <td id="lng3"></td>
+                                <td id="lat3"></td>
+                                <td id="height3"></td>
+                            </tr>
+                            <tr>
+                                <td>经度</td>
+                                <td>纬度</td>
+                                <td>高度</td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li id="airplane4">
+                        <button class="iconfont" id="airDataBox4" onclick="airDataBox4()">&#xe659;</button>
+                        <span id="plane4"><i class="iconfont">&#xe629;</i><span id="username4"></span></span>
+                        <table class="airAttributes">
+                            <tr>
+                                <td id="lng4"></td>
+                                <td id="lat4"></td>
+                                <td id="height4"></td>
+                            </tr>
+                            <tr>
+                                <td>经度</td>
+                                <td>纬度</td>
+                                <td>高度</td>
+                            </tr>
+                        </table>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- 空气数量盒 -->
+        <div class="airData">
+            <ul>
+                <li id="airData1">
+                    <button class="iconfont" onclick="airDataBox1()">&#xe658;</button>
+                    <table>
+                        <tr>
+                            <td>温度</td>
+                            <td>湿度</td>
+                            <td>SO<sub>2</sub></td>
+                            <td>O<sub>3</sub></td>
+                            <td>NO<sub>2</sub></td>
+                            <td>CO</td>
+                            <td>PM2.5</td>
+                            <td>PM10</td>
+                            <td>VOC</td>
+                        </tr>
+                        <tr>
+                            <td id="temperature11"></td>
+                            <td id="humidity11"></td>
+                            <td id="SO211"></td>
+                            <td id="O311"></td>
+                            <td id="NO211"></td>
+                            <td id="CO11"></td>
+                            <td id="PM2.511"></td>
+                            <td id="PM1011"></td>
+                            <td id="VOC11"></td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="airData2">
+                    <button class="iconfont" onclick="airDataBox2()">&#xe658;</button>
+                    <table>
+                        <tr>
+                            <td>温度</td>
+                            <td>湿度</td>
+                            <td>SO<sub>2</sub></td>
+                            <td>O<sub>3</sub></td>
+                            <td>NO<sub>2</sub></td>
+                            <td>CO</td>
+                            <td>PM2.5</td>
+                            <td>PM10</td>
+                            <td>VOC</td>
+                        </tr>
+                        <tr>
+                            <td id="temperature22"></td>
+                            <td id="humidity22"></td>
+                            <td id="SO222"></td>
+                            <td id="O322"></td>
+                            <td id="NO222"></td>
+                            <td id="CO22"></td>
+                            <td id="PM2.522"></td>
+                            <td id="PM1022"></td>
+                            <td id="VOC22"></td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="airData3">
+                    <button class="iconfont" onclick="airDataBox3()">&#xe658;</button>
+                    <table>
+                        <tr>
+                            <td>温度</td>
+                            <td>湿度</td>
+                            <td>SO<sub>2</sub></td>
+                            <td>O<sub>3</sub></td>
+                            <td>NO<sub>2</sub></td>
+                            <td>CO</td>
+                            <td>PM2.5</td>
+                            <td>PM10</td>
+                            <td>VOC</td>
+                        </tr>
+                        <tr>
+                            <td id="temperature33"></td>
+                            <td id="humidity33"></td>
+                            <td id="SO233"></td>
+                            <td id="O333"></td>
+                            <td id="NO233"></td>
+                            <td id="CO33"></td>
+                            <td id="PM2.533"></td>
+                            <td id="PM1033"></td>
+                            <td id="VOC33"></td>
+                        </tr>
+                    </table>
+                </li>
+                <li id="airData4">
+                    <button class="iconfont" onclick="airDataBox4()">&#xe658;</button>
+                    <table>
+                        <tr>
+                            <td>温度</td>
+                            <td>湿度</td>
+                            <td>SO<sub>2</sub></td>
+                            <td>O<sub>3</sub></td>
+                            <td>NO<sub>2</sub></td>
+                            <td>CO</td>
+                            <td>PM2.5</td>
+                            <td>PM10</td>
+                            <td>VOC</td>
+                        </tr>
+                        <tr>
+                            <td id="temperature44"></td>
+                            <td id="humidity44"></td>
+                            <td id="SO244"></td>
+                            <td id="O344"></td>
+                            <td id="NO244"></td>
+                            <td id="CO44"></td>
+                            <td id="PM2.544"></td>
+                            <td id="PM1044"></td>
+                            <td id="VOC44"></td>
+                        </tr>
+                    </table>
+                    </liid="airData">
+            </ul>
+        </div>
+        <!-- 视频播放盒 -->
+        <div id="videoBox1">
+            <video id="myVideo1" class="video-js vjs-big-play-centered" controls autoplay="auto" muted preload="auto"
+                data-setup="{}">
+                <source id='source1' src='../javascript/rmtpjs.js' type='rtmp/flv' />
+            </video>
+        </div>
+        <div id="videoBox2">
+            <video id="myVideo2" class="video-js vjs-big-play-centered" controls autoplay="auto" muted preload="auto"
+                data-setup="{}">
+                <source id='source2' src='../javascript/rmtpjs.js' type='rtmp/flv' />
+            </video>
+        </div>
+        <div id="videoBox3">
+            <video id="myVideo3" class="video-js vjs-big-play-centered" controls autoplay="auto" muted preload="auto"
+                data-setup="{}">
+                <source id='source3' src='../javascript/rmtpjs.js' type='rtmp/flv' />
+            </video>
+        </div>
+        <div id="videoBox4">
+            <video id="myVideo4" class="video-js vjs-big-play-centered" controls autoplay="auto" muted preload="auto"
+                data-setup="{}">
+                <source id='source4' src='../javascript/rmtpjs.js' type='rtmp/flv' />
+            </video>
+        </div>
+    </div>
+    <script>
+        var Button = videojs.getComponent('Button');
+        var reloadButton = videojs.extend(Button, {
+            constructor: function () {
+                Button.apply(this, arguments);
+                videojs.addClass('iconReload')
+            },
+            handleClick: function () {
+                player.pause();
+                player.setAttribute('src');
+                player.load();
+                player.play();
+            }
+        });
+
+        videojs.registerComponent('reloadButton', reloadButton);
+        var player = videojs(document.getElementById('myVideo1'), {
+            controls: true,
+            preload: 'auto',
+            autoplay: true,
+            controlBar: {
+                'liveDisplay': true,
+                'currentTimeDisplay': false,
+                'timeDivider': false,
+                'remainingTimeDisplay': false,
+                'duration-display': false
+            }
+        });
+        var options = {};
+        var player = videojs('myVideo1', options, function onPlayerReady() {
+            this.play();
+        });
+        player.getChild('controlBar').addChild('reloadButton', {});
+
+
+
+        // var player2 = videojs(document.getElementById('myVideo2'), {
+        //     controls: true,
+        //     preload: 'auto',
+        //     autoplay: true,
+        //     controlBar: {
+        //         'liveDisplay': true,
+        //         'currentTimeDisplay': false,
+        //         'timeDivider': false,
+        //         'remainingTimeDisplay': false,
+        //         'duration-display': false
+        //     }
+        // });
+        // var options = {};
+        // var player2 = videojs('myVideo2', options, function onPlayerReady() {
+        //     this.play();
+        // });
+        // player2.getChild('controlBar').addChild('reloadButton', {});
+
+
+
+        // var player3 = videojs(document.getElementById('myVideo3'), {
+        //     controls: true,
+        //     preload: 'auto',
+        //     autoplay: true,
+        //     controlBar: {
+        //         'liveDisplay': true,
+        //         'currentTimeDisplay': false,
+        //         'timeDivider': false,
+        //         'remainingTimeDisplay': false,
+        //         'duration-display': false
+        //     }
+        // });
+        // var options = {};
+        // var player3 = videojs('myVideo3', options, function onPlayerReady() {
+        //     this.play();
+        // });
+        // player3.getChild('controlBar').addChild('reloadButton', {});
+
+
+
+        // var player4 = videojs(document.getElementById('myVideo4'), {
+        //     controls: true,
+        //     preload: 'auto',
+        //     autoplay: true,
+        //     controlBar: {
+        //         'liveDisplay': true,
+        //         'currentTimeDisplay': false,
+        //         'timeDivider': false,
+        //         'remainingTimeDisplay': false,
+        //         'duration-display': false
+        //     }
+        // });
+        // var options = {};
+        // var player4 = videojs('myVideo4', options, function onPlayerReady() {
+        //     this.play();
+        // });
+        // player4.getChild('controlBar').addChild('reloadButton', {});
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js" type="text/javascript">
+    </script>
+    <!-- cdnjs   mqtt备份 -->
+    <script src="javascript/paho-mqtt-min.js"></script>
+    <script src="javascript/mqtt-map.js"></script>
+    <script src="javascript/rtmpjs.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
